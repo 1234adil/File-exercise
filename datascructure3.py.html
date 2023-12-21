@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>datascructure3.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #cc7832;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+datascructure3.py</font>
+</center></td></tr></table>
+<pre><span class="s0"># Write a program that prompts for a file name, then opens that file and reads through the file,</span>
+<span class="s0"># looking for lines of the form:</span>
+<span class="s0"># X-DSPAM-Confidence:    0.8475</span>
+<span class="s0"># Count these lines and extract the floating point</span>
+<span class="s0"># values from each of the lines and compute the average of those</span>
+<span class="s0"># values and produce an output as shown below.</span>
+<span class="s0"># Do not use the sum() function or a variable named sum in your solution.</span>
+<span class="s0"># You can download the sample data at http://www.py4e.com/code3/mbox-short.txt</span>
+<span class="s0"># when you are testing below enter mbox-short.txt as the file name.</span>
+
+<span class="s0"># Use the file name mbox-short.txt as the file name</span>
+<span class="s1">fname = input(</span><span class="s2">&quot;Enter file name: &quot;</span><span class="s1">)</span>
+<span class="s3">try</span><span class="s1">:</span>
+    <span class="s1">fh = open(fname)  </span><span class="s0"># Open the file with the provided file name</span>
+<span class="s3">except </span><span class="s1">FileNotFoundError:</span>
+    <span class="s1">print(</span><span class="s2">&quot;File not found.&quot;</span><span class="s1">)</span>
+    <span class="s1">quit()</span>
+
+<span class="s1">total_confidence = </span><span class="s4">0.0</span>
+<span class="s1">count = </span><span class="s4">0</span>
+
+<span class="s3">for </span><span class="s1">line </span><span class="s3">in </span><span class="s1">fh:</span>
+    <span class="s3">if </span><span class="s1">line.startswith(</span><span class="s2">&quot;X-DSPAM-Confidence:&quot;</span><span class="s1">):</span>
+        <span class="s1">colon_pos = line.find(</span><span class="s2">':'</span><span class="s1">)  </span><span class="s0"># Find the position of ':'</span>
+        <span class="s1">confidence_str = line[colon_pos + </span><span class="s4">1</span><span class="s1">:].strip()  </span><span class="s0"># Extract confidence value as a string</span>
+        <span class="s1">confidence_float = float(confidence_str)  </span><span class="s0"># Convert the string to a float</span>
+        <span class="s1">total_confidence += confidence_float  </span><span class="s0"># Add the confidence value to the total</span>
+        <span class="s1">count += </span><span class="s4">1  </span><span class="s0"># Increment the count of confidence values</span>
+
+<span class="s1">fh.close()  </span><span class="s0"># Close the file after processing</span>
+
+<span class="s3">if </span><span class="s1">count &gt; </span><span class="s4">0</span><span class="s1">:</span>
+    <span class="s1">average_confidence = total_confidence / count  </span><span class="s0"># Calculate the average</span>
+    <span class="s1">print(</span><span class="s2">f&quot;Average spam confidence: </span><span class="s3">{</span><span class="s1">average_confidence</span><span class="s3">:}</span><span class="s2">&quot;</span><span class="s1">)</span>
+<span class="s3">else</span><span class="s1">:</span>
+    <span class="s1">print(</span><span class="s2">&quot;No 'X-DSPAM-Confidence' values found in the file.&quot;</span><span class="s1">)</span>
+
+
+</pre>
+</body>
+</html>
